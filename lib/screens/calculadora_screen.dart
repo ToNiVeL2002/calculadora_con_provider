@@ -17,18 +17,25 @@ class CalculadoraScreen extends StatelessWidget {
           // FONDO
           const Background(),
 
-          // Ver numeros
+          // RESULTADO
+          Align(
+            alignment: Alignment.centerLeft,
+            child: _Resultado( resultado: operacionesProvider.resultado,  ),
+          ),
+
+
+          // OPERACION
+          Align(
+            alignment: Alignment.topRight,
+            child: _Operacion( escribiendo: operacionesProvider.escrito, ),
+          ),
 
           // Botones
-          Align(
+          const Align(
             alignment: Alignment.bottomCenter,
             child: _ButtonBoard(),
           ),
-
-          Align(
-            alignment: Alignment.topRight,
-            child: _Resultado( escribiendo: operacionesProvider.escrito, ),
-          )
+          
         ],
       )
     );
@@ -38,6 +45,29 @@ class CalculadoraScreen extends StatelessWidget {
 class _Resultado extends StatelessWidget {
   _Resultado({
     super.key, 
+    required this.resultado,
+  });
+
+  String resultado;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      child: Text(
+        '= $resultado',
+        style: const TextStyle(
+          color: Colors.white,
+          fontSize: 50,
+        ),
+      ),
+    );
+  }
+}
+
+class _Operacion extends StatelessWidget {
+  _Operacion({
+    super.key, 
     required this.escribiendo,
   });
 
@@ -45,19 +75,24 @@ class _Resultado extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const SizedBox(height: 50,),
-    
-        Text(
-          escribiendo,
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 65,
-            fontWeight: FontWeight.bold
-          ),
-        )
-      ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      child: Column(
+        children: [
+          const SizedBox(height: 50,),
+      
+          Text(
+            escribiendo == ''
+            ? '0'
+            : escribiendo ,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 65,
+              fontWeight: FontWeight.bold
+            ),
+          )
+        ],
+      ),
     );
   }
 }
@@ -132,7 +167,7 @@ class _ButtonBoard extends StatelessWidget {
 
               Column(
                 children: [
-                  _SingleButton(simbolo: 'x', isColor: true, x: largo, y: alto),
+                  _SingleButton(simbolo: '*', isColor: true, x: largo, y: alto),
                   const SizedBox(height: 20,),
                   _SingleButton(simbolo: '%', isColor: true, x: largo, y: alto)
                 ],
@@ -185,12 +220,6 @@ class _SingleButton extends StatelessWidget {
         ),
         fixedSize: MaterialStateProperty.all(Size(x, y))
       ),
-      onPressed: () {
-        print('Hola soy ${simbolo}');
-
-        operacionesProvider.escribiendo = simbolo;
-
-      }, 
       child: Text(
         simbolo,
         style: const TextStyle(
@@ -198,7 +227,11 @@ class _SingleButton extends StatelessWidget {
           fontSize: 35,
           fontWeight: FontWeight.bold
         ),
-      )
+      ),
+      onPressed: () {
+        print('Hola soy ${simbolo}');
+        operacionesProvider.escribiendo = simbolo;
+      }, 
     );
   }
 }
