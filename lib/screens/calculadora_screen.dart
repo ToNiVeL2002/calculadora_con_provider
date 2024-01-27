@@ -17,17 +17,22 @@ class CalculadoraScreen extends StatelessWidget {
           // FONDO
           const Background(),
 
+          // OPERACION 
+          Align(
+            alignment: Alignment.topRight,
+            child: _Operacion( escribiendo: operacionesProvider.escrito),
+          ),
+
+          // HISTORIAL
+          Align(
+            alignment: Alignment.topLeft,
+            child: _Historial( historial1: operacionesProvider.historial1, historial2: operacionesProvider.historial2,),
+          ),
+
           // RESULTADO
           Align(
             alignment: Alignment.centerLeft,
             child: _Resultado( resultado: operacionesProvider.resultado,  ),
-          ),
-
-
-          // OPERACION
-          Align(
-            alignment: Alignment.topRight,
-            child: _Operacion( escribiendo: operacionesProvider.escrito, ),
           ),
 
           // Botones
@@ -38,6 +43,47 @@ class CalculadoraScreen extends StatelessWidget {
           
         ],
       )
+    );
+  }
+}
+
+class _Historial extends StatelessWidget {
+  _Historial({
+    super.key,
+    required this.historial1,
+    required this.historial2,
+  });
+
+  String historial1, historial2;
+
+  @override
+  Widget build(BuildContext context) {
+    Size screen = MediaQuery.of(context).size;
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      child: Column(
+        children: [
+          SizedBox( height: screen.width*0.4,),
+          Text(
+              historial1,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 40,
+                fontWeight: FontWeight.normal
+              ),
+            ),
+
+          SizedBox( height: 20, ),
+          Text(
+              historial2,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 40,
+                fontWeight: FontWeight.normal
+              ),
+            ),
+        ],
+      ),
     );
   }
 }
@@ -58,7 +104,7 @@ class _Resultado extends StatelessWidget {
         '= $resultado',
         style: const TextStyle(
           color: Colors.white,
-          fontSize: 50,
+          fontSize: 60,
         ),
       ),
     );
@@ -90,7 +136,7 @@ class _Operacion extends StatelessWidget {
               fontSize: 65,
               fontWeight: FontWeight.bold
             ),
-          )
+          ),
         ],
       ),
     );
@@ -120,11 +166,11 @@ class _ButtonBoard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              _SingleButton(simbolo: '7', isColor: false, x: largo, y: alto,),
-              _SingleButton(simbolo: '8',  isColor: false, x: largo, y: alto,),
-              _SingleButton(simbolo: '9',  isColor: false, x: largo, y: alto,),
-              _SingleButton(simbolo: '-',  isColor: true, x: largo, y: alto,),
-              _SingleButton(simbolo: '/',  isColor: true, x: largo, y: alto,),
+              SingleButton(simbolo: '7', isColor: false, x: largo, y: alto,),
+              SingleButton(simbolo: '8',  isColor: false, x: largo, y: alto,),
+              SingleButton(simbolo: '9',  isColor: false, x: largo, y: alto,),
+              SingleButton(simbolo: '-',  isColor: true, x: largo, y: alto,),
+              SingleButton(simbolo: '/',  isColor: true, x: largo, y: alto,),
             ],
           ),
 
@@ -135,41 +181,41 @@ class _ButtonBoard extends StatelessWidget {
             children: [
               Column(
                 children: [
-                  _SingleButton(simbolo: '4', isColor: false, x: largo, y: alto,),
+                  SingleButton(simbolo: '4', isColor: false, x: largo, y: alto,),
                   const SizedBox(height: 20,),
-                  _SingleButton(simbolo: '1', isColor: false, x: largo, y: alto,)
+                  SingleButton(simbolo: '1', isColor: false, x: largo, y: alto,)
                 ],
               ),
 
               Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  _SingleButton(simbolo: '5', isColor: false, x: largo, y: alto,),
+                  SingleButton(simbolo: '5', isColor: false, x: largo, y: alto,),
                   const SizedBox(height: 20,),
-                  _SingleButton(simbolo: '2', isColor: false, x: largo, y: alto,)
+                  SingleButton(simbolo: '2', isColor: false, x: largo, y: alto,)
                 ],
               ),
 
               Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  _SingleButton(simbolo: '6', isColor: false, x: largo, y: alto),
+                  SingleButton(simbolo: '6', isColor: false, x: largo, y: alto),
                   const SizedBox(height: 20,),
-                  _SingleButton(simbolo: '3', isColor: false, x: largo, y: alto)
+                  SingleButton(simbolo: '3', isColor: false, x: largo, y: alto)
                 ],
               ),
 
               Column(
                 children: [
-                  _SingleButton(simbolo: '+', isColor: true, x: largo, y: alto*2.3)
+                  SingleButton(simbolo: '+', isColor: true, x: largo, y: alto*2.3)
                 ],
               ),
 
               Column(
                 children: [
-                  _SingleButton(simbolo: '*', isColor: true, x: largo, y: alto),
+                  SingleButton(simbolo: '*', isColor: true, x: largo, y: alto),
                   const SizedBox(height: 20,),
-                  _SingleButton(simbolo: '%', isColor: true, x: largo, y: alto)
+                  SingleButton(simbolo: '%', isColor: true, x: largo, y: alto)
                 ],
               )
             ],
@@ -180,10 +226,10 @@ class _ButtonBoard extends StatelessWidget {
           Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              _SingleButton(simbolo: '0', isColor: false, x: largo, y: alto),
-              _SingleButton(simbolo: '.', isColor: false, x: largo, y: alto),
-              _SingleButton(simbolo: 'C', isColor: false, x: largo, y: alto),
-              _SingleButton(simbolo: '=', isColor: true, x: largo*2.1, y: alto)
+              SingleButton(simbolo: '0', isColor: false, x: largo, y: alto),
+              SingleButton(simbolo: '.', isColor: false, x: largo, y: alto),
+              SingleButton(simbolo: 'C', isColor: false, x: largo, y: alto),
+              SingleButton(simbolo: '=', isColor: true, x: largo*2.1, y: alto)
             ],
           )
         ],
@@ -192,46 +238,3 @@ class _ButtonBoard extends StatelessWidget {
   }
 }
 
-class _SingleButton extends StatelessWidget {
-  
-  const _SingleButton({
-    super.key, 
-    required this.simbolo,  
-    required this.isColor, 
-    required this.x, 
-    required this.y,
-  });
-  
-  final String simbolo;
-  final double x, y;
-  final bool isColor;
-
-  @override
-  Widget build(BuildContext context) {
-    final operacionesProvider = Provider.of<OperacionesProvider>(context);
-
-    return ElevatedButton(
-      
-      style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all(
-          isColor
-          ? Colors.amber
-          : const Color.fromRGBO(0, 25, 0, 0.0)
-        ),
-        fixedSize: MaterialStateProperty.all(Size(x, y))
-      ),
-      child: Text(
-        simbolo,
-        style: const TextStyle(
-          color: Colors.white,
-          fontSize: 35,
-          fontWeight: FontWeight.bold
-        ),
-      ),
-      onPressed: () {
-        print('Hola soy ${simbolo}');
-        operacionesProvider.escribiendo = simbolo;
-      }, 
-    );
-  }
-}
